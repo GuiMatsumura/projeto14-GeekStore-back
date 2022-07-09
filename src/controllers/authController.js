@@ -1,6 +1,7 @@
 import joi from "joi";
 import bcrypt from "bcrypt";
 import { db } from "../db/mongo.js";
+import { v4 as uuid } from "uuid";
 
 export async function postUsers(req, res) {
   const user = req.body;
@@ -45,5 +46,47 @@ export async function postUsers(req, res) {
     res.status(201).send("Conta cadastrada com sucesso!");
   } catch (err) {
     res.status(500).send(err);
+  }
+}
+
+export async function postSession(req, res) {
+  const user = req.body;
+  const userSchema = joi.object({
+    email: joi.string().email().required(),
+    password: joi.required(),
+  });
+  const { error } = userSchema.validate(user);
+  if (error) {
+    res.status(422).send("Erro ao entrar");
+    return;
+  }
+  try {
+    const findUser = await db
+      .collection("users")
+      .findOne({ email: user.email });
+    if (!findUser) {
+      res.status(401).send("Email ou senha incorretos!");
+      return;
+    }
+
+    const comparePassword = bcrypt.compareSync(
+      user.password,
+      findUser.password
+    );
+    if (!comparePassword) {
+      res.status(401).send("Email ou senha incorretos!");
+      return;
+    }
+
+    const token = uuid();
+    await db.collection("sections").insertOne({
+      token,
+      userId: findUser._id,
+    });
+
+    res.status(200).send({ token });
+  } catch (err) {
+    res.status(500).send(err);
+    return;
   }
 }
