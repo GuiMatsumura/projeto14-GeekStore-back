@@ -6,6 +6,7 @@ import {
   getJogos,
   getPerifericos,
   getProduct,
+  postCart,
 } from "../controllers/productsController.js";
 
 const router = Router();
@@ -16,5 +17,6 @@ router.get("/monitor", getMonitor);
 router.get("/jogos", getJogos);
 router.get("/perifericos", getPerifericos);
 router.post("/product", getProduct);
+router.post("/cart", postCart);
 
 export default router;

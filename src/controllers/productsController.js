@@ -73,3 +73,17 @@ export async function getProduct(req, res) {
     return res.sendStatus(500);
   }
 }
+
+export async function postCart(req, res) {
+  const ids = req.body;
+  try {
+    let cart = [];
+    for (const product of ids) {
+      const item = await db.collection("products").findOne({ id: product.id });
+      cart.push(item);
+    }
+    res.status(202).send(cart);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+}
