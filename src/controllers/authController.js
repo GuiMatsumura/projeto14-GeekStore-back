@@ -9,7 +9,7 @@ export async function postUsers(req, res) {
     name: joi.string().required(),
     email: joi.string().email().required(),
     password: joi.required(),
-    cep: joi.number().min(8).max(8).required(),
+    cep: joi.number().required(),
     street: joi.required(),
     complement: joi.string(),
     district: joi.required(),
