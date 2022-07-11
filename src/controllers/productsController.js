@@ -66,7 +66,7 @@ export async function getPerifericos(req, res) {
 export async function getProduct(req, res) {
   const { id } = req.body;
   try {
-    const product = await db.collection("products").find({ id: id });
+    const product = await db.collection("products").find({ id: id }).toArray();
     res.status(202).send(product);
   } catch (err) {
     return res.sendStatus(500);
