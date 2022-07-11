@@ -77,7 +77,7 @@ export async function getProduct(req, res) {
 export async function postCart(req, res) {
   const ids = req.body;
   try {
-    let cart = [];
+    let cart;
     for (const product of ids) {
       const item = await db.collection("products").findOne({ id: product.id });
       cart.push(item);
