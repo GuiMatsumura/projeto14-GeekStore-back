@@ -1,4 +1,4 @@
-import { db } from "../db/mongo";
+import { db } from "../db/mongo.js";
 
 export async function getHardware(req, res) {
   try {

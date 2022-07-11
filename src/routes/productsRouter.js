@@ -5,7 +5,7 @@ import {
   getMonitor,
   getJogos,
   getPerifericos,
-} from "../controllers/productsController";
+} from "../controllers/productsController.js";
 
 const router = Router();
 
