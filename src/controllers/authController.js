@@ -17,10 +17,10 @@ export async function postUsers(req, res) {
     uf: joi.string().min(2).max(2).required(),
   });
 
-  const { error } = userSchema.validate(user);
+  const { error } = userSchema.validate(user, { abortEarly: true });
 
   if (error) {
-    res.status(422).send("Erro ao cadastrar");
+    res.status(422).send(error.details);
     return;
   }
 
