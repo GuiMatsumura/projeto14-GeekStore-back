@@ -64,9 +64,14 @@ export async function getPerifericos(req, res) {
 }
 
 export async function getProduct(req, res) {
-  const { id } = req.body;
+  //   const { id } = req.body;
+  //   console.log(id);
   try {
-    const product = await db.collection("products").find({ id: id }).toArray();
+    const product = await db
+      .collection("products")
+      .find({ name: "Processador AMD" })
+      .toArray();
+    console.log(product);
     res.status(202).send(product);
   } catch (err) {
     return res.sendStatus(500);
