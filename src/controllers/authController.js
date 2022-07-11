@@ -79,7 +79,7 @@ export async function postSession(req, res) {
     }
 
     const token = uuid();
-    await db.collection("sections").insertOne({
+    await db.collection("sessions").insertOne({
       token,
       userId: findUser._id,
     });
