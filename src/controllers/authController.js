@@ -11,7 +11,7 @@ export async function postUsers(req, res) {
     password: joi.required(),
     cep: joi.number().min(8).max(8).required(),
     street: joi.required(),
-    complement,
+    complement: joi.string(),
     district: joi.required(),
     city: joi.string().required(),
     uf: joi.string().min(2).max(2).required(),
@@ -53,11 +53,11 @@ export async function postSession(req, res) {
   const user = req.body;
   const userSchema = joi.object({
     email: joi.string().email().required(),
-    password: joi.required(),
+    password: joi.string().required(),
   });
   const { error } = userSchema.validate(user);
   if (error) {
-    res.status(422).send("Erro ao entrar");
+    res.status(422).send(error.message);
     return;
   }
   try {
