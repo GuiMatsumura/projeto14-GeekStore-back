@@ -15,6 +15,6 @@ router.get("/promotion", getPromotion);
 router.get("/monitor", getMonitor);
 router.get("/jogos", getJogos);
 router.get("/perifericos", getPerifericos);
-router.get("/product", getProduct);
+router.post("/product", getProduct);
 
 export default router;
