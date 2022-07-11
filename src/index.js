@@ -9,6 +9,8 @@ app.use(cors());
 app.use(express.json());
 dotenv.config();
 
+app.options("*", cors());
+
 app.use(authRouter);
 
 const port = process.env.PORT;
