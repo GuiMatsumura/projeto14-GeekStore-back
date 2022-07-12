@@ -90,3 +90,25 @@ export async function postSession(req, res) {
     return;
   }
 }
+
+export async function getUser(req, res) {
+  const { token } = req.headers;
+  token.replace("Bearer ", "");
+  try {
+    const userId = await db.collection("session").findOne({ token: token });
+    const user = await db.collection("users").findOne({ _id: userId });
+    if (!user) {
+      return res.sendStatus(401);
+    }
+    res.status(200).send({
+      street: user.street,
+      cep: user.cep,
+      complement: user.complement,
+      district: user.district,
+      city: user.city,
+      uf: user.uf,
+    });
+  } catch (err) {
+    return res.sendStatus(500);
+  }
+}

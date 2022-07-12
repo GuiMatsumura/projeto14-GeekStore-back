@@ -87,3 +87,21 @@ export async function postCart(req, res) {
     res.sendStatus(500);
   }
 }
+
+export async function postOrders(req, res) {
+  const ids = req.body;
+  const { authorization } = req.headers;
+  const token = authorization?.replace("Bearer ", "");
+
+  try {
+    const userSession = await db.collection("session").findOne({ token });
+
+    if (!userSession) {
+      res.sendStatus(401);
+      return;
+    }
+    const userId = userSession.userId;
+  } catch (error) {
+    res.sendStatus(500);
+  }
+}
